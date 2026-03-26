@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 사내 해외연수 안내</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <!-- QR 코드 생성을 위한 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Noto+Sans+KR', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .card-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .header-image {
+            height: 200px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 24px;
+            border-bottom: 1px solid #f8fafc;
+        }
+
+        .info-icon {
+            width: 36px;
+            height: 36px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .apply-button {
+            background: #2563eb;
+            color: white;
+            width: calc(100% - 48px);
+            margin: 20px 24px 10px 24px;
+            padding: 16px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            display: block;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .apply-button:hover {
+            background: #1d4ed8;
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.4);
+        }
+
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0 30px 0;
+            background-color: #fafafa;
+        }
+
+        #qrcode img {
+            margin: 0 auto;
+            border: 8px solid white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container">
+        <!-- 상단 헤더 -->
+        <div class="header-image">
+            <span class="bg-blue-500 px-3 py-1 rounded-full text-[10px] font-bold mb-2 tracking-widest uppercase">Employee Welfare</span>
+            <h1 class="text-2xl font-bold">2026 해외연수 안내</h1>
+            <p class="text-sm opacity-90 mt-1">Global Experience & Vision</p>
+        </div>
+
+        <!-- 상세 정보 섹션 -->
+        <div class="py-2">
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-calendar-check"></i></div>
+                <div>
+                    <div class="text-xs text-gray-400">연수 기간</div>
+                    <div class="text-base font-bold text-gray-800">2026년 4월 ~ 6월</div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-map-marked-alt"></i></div>
+                <div>
+                    <div class="text-xs text-gray-400">연수 일정</div>
+                    <div class="text-base font-bold text-gray-800">9박 10일</div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-icon"><i class="fas fa-wallet"></i></div>
+                <div>
+                    <div class="text-xs text-gray-400">경비 지원</div>
+                    <div class="text-base font-bold text-gray-800 text-blue-600">1인당 1,000만원</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 신청 링크 버튼 -->
+        <a href="https://forms.gle/hyFK15kHrhwTGB737" target="_blank" class="apply-button">
+            신청서 작성하기 <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+        </a>
+        <p class="text-center text-[11px] text-gray-400">버튼을 클릭하면 구글 폼으로 이동합니다.</p>
+
+        <!-- QR 코드 섹션 -->
+        <div class="qr-section mt-4">
+            <div id="qrcode" class="mb-3"></div>
+            <p class="text-[12px] font-medium text-gray-500">PC 사용자를 위한 스캔용 QR</p>
+        </div>
+
+        <!-- 푸터 -->
+        <div class="text-center pb-6 text-[10px] text-gray-300">
+            인사팀(HR) 해외연수 담당자 문의
+        </div>
+    </div>
+
+    <script>
+        // 페이지 로드 시 QR 코드 생성
+        window.onload = function() {
+            const formUrl = "https://forms.gle/hyFK15kHrhwTGB737";
+            new QRCode(document.getElementById("qrcode"), {
+                text: formUrl,
+                width: 120,
+                height: 120,
+                colorDark : "#1f2937",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        };
+    </script>
+</body>
+</html>
